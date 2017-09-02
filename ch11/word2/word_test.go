@@ -51,6 +51,38 @@ func BenchmarkIsPalindrome(b *testing.B) {
 	}
 }
 
+func BenchmarkIsPalindrome2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IsPalindrome2("A man, a plan, a canal: Panama")
+	}
+}
+
+var hashStr = "This page intentionally left blank."
+
+func BenchmarkMd5sum(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Md5sum(hashStr)
+    }
+}
+
+func BenchmarkSha1sum(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Sha1sum(hashStr)
+    }
+}
+
+func BenchmarkSha256sum(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Sha256sum(hashStr)
+    }
+}
+
+func BenchmarkSha512sum(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Sha512sum(hashStr)
+    }
+}
+
 //!-bench
 
 //!+example

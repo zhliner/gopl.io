@@ -11,18 +11,32 @@ import (
 	"time"
 )
 
+var nx int
+
 //!+
 func main() {
-	go spinner(100 * time.Millisecond)
+	go wrap()(100 * time.Millisecond)
+        fmt.Println(nx)
+
 	const n = 45
 	fibN := fib(n) // slow
 	fmt.Printf("\rFibonacci(%d) = %d\n", n, fibN)
 }
 
+// Hzh测试：
+// go语句的部分会立即执行
+// 但会提取最终的函数调用后才开启一个新的goroutine并返回。
+// 这与defer的语法逻辑一样。
+func wrap() func (time.Duration) {
+    nx += 99
+    time.Sleep(2 * time.Second)
+    return spinner
+}
+
 func spinner(delay time.Duration) {
 	for {
 		for _, r := range `-\|/` {
-			fmt.Printf("\r%c", r)
+			fmt.Printf("\r%c", r)  // 或"\b%c"
 			time.Sleep(delay)
 		}
 	}
